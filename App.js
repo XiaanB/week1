@@ -2,6 +2,7 @@ import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import * as React from 'react';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -14,13 +15,15 @@ export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     // <Navigation />;
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name = "Login" component ={LoginScreen}/>
-        <Stack.Screen name = "Home" component ={HomeScreen}/>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name = "Login" component ={LoginScreen}/>
+          <Stack.Screen name = "Home" component ={HomeScreen}/>
 
-      </Stack.Navigator> 
-    </NavigationContainer>
+        </Stack.Navigator> 
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
 
