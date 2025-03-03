@@ -1,10 +1,54 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import { View, Text, StyleSheet, TextInput, Button, FlatList } from 'react-native';
+
+import {db} from "../firebaseconfig";
+import {collection, addDoc, getDocs} from 'firebase/firestore'
 
 const HomeScreen = () => {
+        const [newItem, setNewItem] =  useState("");
+        const [newAdress, setNewAdress] =  useState("");
+
+        const addItem = async() => {
+            await addDoc(collection(db, 'items'), {
+                name: newItem,
+                address : newAdress
+
+            } );
+            setNewItem("");
+            setNewAdress("");
+        };
+
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Home screen hello</Text>
+            <TextInput
+                style = {{
+                    height:50,
+                    width:300,
+                    borderBlockColor:'gray',
+                    borderWidth:2,
+                    marginBottom: 10,
+                    padding: 10
+                }}
+                placeholder='Add student name'
+                value={newItem}
+                onChangeText={setNewItem}
+            />
+
+            <TextInput
+                style = {{
+                    height:50,
+                    width:300,
+                    borderBlockColor:'gray',
+                    borderWidth:2,
+                    marginBottom: 10,
+                    padding: 10
+                }}
+                placeholder='Add student adress'
+                value={newAdress}
+                onChangeText={setNewAdress}
+            />
+            <Button title ="Add student data" onPress={addItem}             
+/> 
         </View>
     );
 };
