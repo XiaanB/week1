@@ -7,29 +7,41 @@ import{
     signInWithEmailAndPassword
  } from 'firebase/auth'
 import { TextInput } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginScreen = ({navigation}) => {
     const auth = getAuth ();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    // const navigation = useNavigation();
+
     const createUser = () => {
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredentials) => {
             const user = userCredentials.user;
-            console.log ('User registered with email:', user.email)
-        } )
-    }
+            console.log ('User log in  with email:', user.email);
+            navigation.navigate("Home");
+
+        } ) .catch((error) => alert(error.message));
+    };
 
     const signInUser = () => {
+        signInWithEmailAndPassword (auth, email, password)
+        .then((userCredentials) => {
+            const user = userCredentials.user;
+            console.log ('User registered with email:', user.email);
+            navigation.navigate("Home");
 
-    }
+
+        } ) .catch((error) => alert(error.message));
+
+    };
 
     return (
         <View style={styles.container}>
             <Image  
                 source={require("../assets/firebase.png")}
-                // style = {styles.logo}
                 style={{
                     width: "100%",
                     height: 150,
@@ -52,11 +64,11 @@ const LoginScreen = ({navigation}) => {
                 onChangeText={(text) => setPassword(text)} />  
 
             {/* <Button title = "Login" onPress={signInUser}/> */}
-            <TouchableOpacity style={styles.button} onPress={() => {signInUser}}>
+            <TouchableOpacity style={styles.button} onPress={signInUser}>
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
             {/* <Button title = " Register" onPress={createUser}/>  */}
-            <TouchableOpacity style={[styles.button, styles.registerButton]} onPress={() => {createUser}}>
+            <TouchableOpacity style={[styles.button, styles.registerButton]} onPress={createUser}>
                 <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>      
             <Text style={styles.text}>Login screen hello</Text>
@@ -78,13 +90,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#f8f8f8',
         padding: 20,
     },
-    logo: {
-        width: 100,
-        height: 100,
-        marginBottom: 20,
-    },
     input: {
-        width: '100%',
+        width: '80%',
         height: 50,
         borderColor: '#ddd',
         borderWidth: 1,
@@ -95,10 +102,10 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     button: {
-        width: '100%',
+        width: '80%',
         backgroundColor: '#007BFF',
         paddingVertical: 12,
-        borderRadius: 10,
+        borderRadius: 25,
         alignItems: 'center',
         marginBottom: 10,
     },
