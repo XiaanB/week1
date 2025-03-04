@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 import AnimationScreen from "./screens/AnimationScreen";
+import TraditionalAnimation from './screens/TraditionalAnimation';
 
 
 export default function App() {
@@ -21,6 +22,8 @@ export default function App() {
           <Stack.Screen name = "Login" component ={LoginScreen}/>
           <Stack.Screen name = "Home" component ={HomeScreen}/>
           <Stack.Screen name = "Animation" component={AnimationScreen}/>
+          <Stack.Screen name = "Traditional Animation" component={TraditionalAnimation}/>
+
 
 
 

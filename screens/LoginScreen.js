@@ -83,6 +83,11 @@ const LoginScreen = ({navigation}) => {
                 onPress={() => navigation.navigate('Animation')} 
             />
 
+            <Button 
+                title="Go to Traditional Anmation screen" 
+                onPress={() => navigation.navigate('Traditional Animation')} 
+            />
+
 
         </View>
     );
