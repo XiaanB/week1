@@ -1,14 +1,33 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, {useEffect, useRef} from 'react';
+import { View, Text, StyleSheet,Animated } from 'react-native';
 
-const AnimatedText = () => {
-  return (
-    <View>
-      <Text>AnimatedText</Text>
-    </View>
-  )
-}
+const AnimationText = () => {
+    const first = useRef (new Animated.Value(0)).current;
 
-export default AnimatedText
+    useEffect(() =>{
+        Animated.timing(first, {
+            toValue:750,
+            useNativeDriver:true,
+            duration: 5000,
+            delay:1000,
+        }).start();
+    }, []) ;
+   return (
+        <View style={styles.container}>
+            <Animated.Text style={{ transform: [{ translateY: first }] }}>
+                Hello
+            </Animated.Text>
+        </View>
+    );
+};
 
-const styles = StyleSheet.create({})
+export default AnimationText;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+    },
+});

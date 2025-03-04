@@ -93,6 +93,11 @@ const LoginScreen = ({navigation}) => {
                 onPress={() => navigation.navigate('Animated Image')} 
             />
 
+            <Button 
+                title="Go to Animated Text screen" 
+                onPress={() => navigation.navigate('Animated Text')} 
+            />
+
 
 
         </View>
