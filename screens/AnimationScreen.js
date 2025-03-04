@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet,Animated } from 'react-native';
 
 const AnimationScreen = () => {
+    useRef 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Animation Screen</Text>

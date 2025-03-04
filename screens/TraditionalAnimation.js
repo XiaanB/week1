@@ -10,7 +10,7 @@ const TraditionalAnimation = () => {
     const [first, setFirst] = useState(0);
 
     useEffect(() =>{
-        for(let i=0;i<250;i++){
+        for(let i=0;i<400;i++){
             setTimeout(() =>{
                 setFirst(i);
             },25*i);
@@ -23,7 +23,8 @@ const TraditionalAnimation = () => {
             height: 100,
             backgroundColor: "orange",
             marginTop: 50,
-            transform:[{translateX:first}],
+            alignSelf: "center",
+            transform:[{translateY:first}],
         }}>
         </View>
     );
