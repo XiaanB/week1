@@ -13,6 +13,8 @@ import TraditionalAnimation from './screens/TraditionalAnimation';
 import AnimatedImage from './screens/AnimatedImage';
 import AnimatedText from './screens/AnimatedText';
 import MultiAnimation from './screens/MultiAnimation';
+import Interpolation from './screens/Interpolation';
+
 
 
 
@@ -30,7 +32,7 @@ export default function App() {
           <Stack.Screen name = "Animated Image" component={AnimatedImage} />
           <Stack.Screen name = "Animated Text" component={AnimatedText}/>
           <Stack.Screen name = "Multi Animation" component={MultiAnimation}/>
-
+          <Stack.Screen name = "Interpolation" component={Interpolation}/>
 
 
 

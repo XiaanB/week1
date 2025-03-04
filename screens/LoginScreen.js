@@ -101,6 +101,11 @@ const LoginScreen = ({navigation}) => {
                 title="Go to Multi ANimation screen" 
                 onPress={() => navigation.navigate('Multi Animation')} 
             />
+                        <Button 
+                title="Go to Interpolation screen" 
+                onPress={() => navigation.navigate('Interpolation')} 
+            />
+
 
 
 
