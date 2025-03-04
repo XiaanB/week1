@@ -12,6 +12,8 @@ import AnimationScreen from "./screens/AnimationScreen";
 import TraditionalAnimation from './screens/TraditionalAnimation';
 import AnimatedImage from './screens/AnimatedImage';
 import AnimatedText from './screens/AnimatedText';
+import MultiAnimation from './screens/MultiAnimation';
+
 
 
 export default function App() {
@@ -25,8 +27,9 @@ export default function App() {
           <Stack.Screen name = "Home" component ={HomeScreen}/>
           <Stack.Screen name = "Animation" component={AnimationScreen}/>
           <Stack.Screen name = "Traditional Animation" component={TraditionalAnimation}/>
-          <Stack.Screen name="Animated Image" component={AnimatedImage} />
+          <Stack.Screen name = "Animated Image" component={AnimatedImage} />
           <Stack.Screen name = "Animated Text" component={AnimatedText}/>
+          <Stack.Screen name = "Multi Animation" component={MultiAnimation}/>
 
 
 
