@@ -1,12 +1,27 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import { View, Text, StyleSheet,Animated } from 'react-native';
 
 const AnimationScreen = () => {
-    useRef 
+    const first = useRef (new Animated.Value(0)).current;
+
+    useEffect(() =>{
+        Animated.timing(first, {
+            toValue:750,
+            useNativeDriver:true,
+            duration: 5000,
+            delay:1000,
+        }).start();
+    }, []) ;
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Animation Screen</Text>
-    </View>
+    <Animated.View 
+        style={{
+            width:100,
+            height: 100,
+            backgroundColor: "orange",
+            marginTop: 50,
+            transform:[{translateX:first}],
+        }}>
+    </Animated.View>
   );
 };
 

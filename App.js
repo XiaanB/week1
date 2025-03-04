@@ -10,7 +10,7 @@ import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 import AnimationScreen from "./screens/AnimationScreen";
 import TraditionalAnimation from './screens/TraditionalAnimation';
-
+import AnimatedImage from './screens/AnimatedImage';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -23,6 +23,7 @@ export default function App() {
           <Stack.Screen name = "Home" component ={HomeScreen}/>
           <Stack.Screen name = "Animation" component={AnimationScreen}/>
           <Stack.Screen name = "Traditional Animation" component={TraditionalAnimation}/>
+          <Stack.Screen name = "Animated Image" component={AnimatedImage}/>
 
 
 
