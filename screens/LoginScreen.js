@@ -14,6 +14,8 @@ const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+
+    // Finally working
     // Get the redirect URI
     const redirectUri = "https://auth.expo.io/@xiaan/week1";
     
