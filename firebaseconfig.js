@@ -1,13 +1,11 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
-import { getFirestore} from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from "firebase/firestore";
+import { getAuth, signInWithCredential, GoogleAuthProvider } from "firebase/auth";
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAxBMCEc8IdUW9PXcRfo8WZxQlbTxlo73Q",
   authDomain: "advanced-mobile-dev-q1-25.firebaseapp.com",
@@ -23,5 +21,9 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
 
-export { auth, db };
+WebBrowser.maybeCompleteAuthSession();
+
+// Export Auth-related functionalities
+export { auth, db, provider, signInWithCredential, GoogleAuthProvider, app };

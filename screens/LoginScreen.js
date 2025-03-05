@@ -1,110 +1,129 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, Image, TouchableOpacity } from 'react-native';
-import "../firebaseconfig";
-import{
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
- } from 'firebase/auth'
-import { TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
+import { TextInput } from 'react-native-gesture-handler';
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+import { auth } from "../firebaseconfig";  // Import the necessary functions
 
-const LoginScreen = ({navigation}) => {
-    const auth = getAuth ();
+
+WebBrowser.maybeCompleteAuthSession();
+
+const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // const navigation = useNavigation();
+    // Get the redirect URI
+    const redirectUri = "https://auth.expo.io/@xiaan/week1";
+    
+    // Google Auth Hook
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        clientId: "257137710433-37jp95dcu3hl1p3lu3k4gr46eseinvb4.apps.googleusercontent.com",
+        redirectUri: redirectUri,
+    });
+
+    useEffect(() => {
+        if (response?.type === "success") {
+            const { id_token } = response.params;
+            const credential = GoogleAuthProvider.credential(id_token);
+            signInWithCredential(auth, credential)
+                .then((userCredential) => {
+                    console.log("✅ Google Sign-In Success!", userCredential.user);
+                    navigation.navigate("Home");
+                })
+                .catch((error) => console.error("❌ Google Sign-In Error:", error));
+        }
+    }, [response]);
 
     const createUser = () => {
         createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredentials) => {
-            const user = userCredentials.user;
-            console.log ('User log in  with email:', user.email);
-            navigation.navigate("Home");
-
-        } ) .catch((error) => alert(error.message));
+            .then((userCredentials) => {
+                const user = userCredentials.user;
+                console.log('User registered with email:', user.email);
+                navigation.navigate("Home");
+            })
+            .catch((error) => alert(error.message));
     };
 
     const signInUser = () => {
-        signInWithEmailAndPassword (auth, email, password)
-        .then((userCredentials) => {
-            const user = userCredentials.user;
-            console.log ('User registered with email:', user.email);
-            navigation.navigate("Home");
-
-
-        } ) .catch((error) => alert(error.message));
-
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredentials) => {
+                const user = userCredentials.user;
+                console.log('User logged in with email:', user.email);
+                navigation.navigate("Home");
+            })
+            .catch((error) => alert(error.message));
     };
 
     return (
         <View style={styles.container}>
-            <Image  
+            <Image
                 source={require("../assets/firebase.png")}
                 style={{
                     width: "100%",
                     height: 150,
-                }} 
-                />
+                }}
+            />
             <TextInput
-                style = {styles.input}
+                style={styles.input}
                 placeholder='Enter your email'
                 placeholderTextColor="#999"
-                icon = "email"
-                value ={email}
-                onChangeText={(text) => setEmail(text)} />    
+                value={email}
+                onChangeText={(text) => setEmail(text)} 
+            />
             <TextInput
-                style = {styles.input}
+                style={styles.input}
                 placeholder='Enter your password'
                 placeholderTextColor="#999"
-                icon = "lock"
                 secureTextEntry
-                value ={password}
-                onChangeText={(text) => setPassword(text)} />  
+                value={password}
+                onChangeText={(text) => setPassword(text)} 
+            />
 
-            {/* <Button title = "Login" onPress={signInUser}/> */}
             <TouchableOpacity style={styles.button} onPress={signInUser}>
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
-            {/* <Button title = " Register" onPress={createUser}/>  */}
+
             <TouchableOpacity style={[styles.button, styles.registerButton]} onPress={createUser}>
                 <Text style={styles.buttonText}>Register</Text>
-            </TouchableOpacity>      
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.button, styles.googleButton]} onPress={() => promptAsync()}>
+                <Text style={styles.buttonText}>Sign in with Google</Text>
+            </TouchableOpacity>
+
             <Text style={styles.text}>Login screen hello</Text>
 
-            <Button 
-                title="Go to Home" 
-                onPress={() => navigation.navigate('Home')} 
+            <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+            <Button title="Go to Animation screen" onPress={() => navigation.navigate('Animation')} />
+            {/* Add more navigation buttons as necessary */}
+            <Button
+                title="Go to Traditional Anmation screen"
+                onPress={() => navigation.navigate('Traditional Animation')}
             />
 
-            <Button 
-                title="Go to Anmation screen" 
-                onPress={() => navigation.navigate('Animation')} 
+
+            <Button
+                title="Go to Animated Image screen"
+                onPress={() => navigation.navigate('Animated Image')}
             />
 
-            <Button 
-                title="Go to Traditional Anmation screen" 
-                onPress={() => navigation.navigate('Traditional Animation')} 
+
+            <Button
+                title="Go to Animated Text screen"
+                onPress={() => navigation.navigate('Animated Text')}
+            />
+            <Button
+                title="Go to Multi ANimation screen"
+                onPress={() => navigation.navigate('Multi Animation')}
+            />
+                        <Button
+                title="Go to Interpolation screen"
+                onPress={() => navigation.navigate('Interpolation')}
             />
 
-            <Button 
-                title="Go to Animated Image screen" 
-                onPress={() => navigation.navigate('Animated Image')} 
-            />
 
-            <Button 
-                title="Go to Animated Text screen" 
-                onPress={() => navigation.navigate('Animated Text')} 
-            />
-            <Button 
-                title="Go to Multi ANimation screen" 
-                onPress={() => navigation.navigate('Multi Animation')} 
-            />
-                        <Button 
-                title="Go to Interpolation screen" 
-                onPress={() => navigation.navigate('Interpolation')} 
-            />
 
 
 
@@ -148,12 +167,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
-    linkText: {
-        color: '#007BFF',
-        fontSize: 16,
-        marginTop: 15,
-    }
+    googleButton: {
+        backgroundColor: '#4285F4', // Google's blue color
+    },
+    text: {
+        fontSize: 18,
+        color: '#333',
+    },
 });
 
 export default LoginScreen;
-
